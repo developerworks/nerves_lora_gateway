@@ -56,7 +56,6 @@ inc/config.h: ../VERSION library.cfg
 ### library module target
 
 $(OBJDIR):
-	mkdir -p ../../priv
 	mkdir -p $(OBJDIR)
 
 $(OBJDIR)/%.o: src/%.c $(INCLUDES) inc/config.h | $(OBJDIR)
@@ -76,6 +75,7 @@ libloragw.a: $(OBJDIR)/loragw_hal.o $(OBJDIR)/loragw_gps.o $(OBJDIR)/loragw_reg.
 ### test programs
 
 test_loragw_spi: tst/test_loragw_spi.c libloragw.a
+	mkdir -p ../../priv
 	$(CC) $(CFLAGS) -L. -O2 -Wall -Wextra -std=c99 -Iinc $< -o ../../priv/$@ $(LIBS)
 
 test_loragw_reg: tst/test_loragw_reg.c libloragw.a
